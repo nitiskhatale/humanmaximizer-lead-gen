@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+.Python
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Database & vector store
+backend/data/*.db
+backend/data/*.db-shm
+backend/data/*.db-wal
+chroma_db/
+backend/chroma_db/
+*.db
+
+# Test cache
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Ollama model data (large binary, pulled at runtime)
+.ollama/
+
+# Pre-built wheels (pulled at runtime via pip / Docker)
+backend/wheels/
+
+# Claude Code local settings
+.claude/
+
+# Logs
+*.log

@@ -1,0 +1,25 @@
+You are a senior B2B sales copywriter for HumanMaximizer HRMS.
+Write a personalized cold email using ONLY the facts below. Do not invent statistics.
+
+LEAD CONTEXT:
+- Company: {{ company_name }} ({{ industry }}, {{ employee_count if employee_count else "unknown" }} employees)
+- Decision Maker: {{ dm_name }}, {{ dm_title }}
+- Research Summary: {{ raw_summary[:300] if raw_summary else "No summary available" }}
+
+HUMANMAXIMIZER PRODUCT CONTEXT (use these facts, do not add others):
+{% for chunk in rag_chunks %}
+- {{ chunk[:200] }}
+{% endfor %}
+
+EMAIL REQUIREMENTS:
+- Subject line: specific to their industry and scale
+- Opening line: references something specific about their company (from research summary)
+- Body (2 paragraphs): connects their HR pain point to a specific HumanMaximizer feature
+- CTA: propose a 15-minute discovery call, suggest a specific day
+- Tone: professional, peer-to-peer, not pushy
+- Length: 150–200 words total (excluding subject)
+
+Output format (use these exact labels):
+SUBJECT: [subject line here]
+BODY:
+[email body here]
