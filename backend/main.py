@@ -44,8 +44,9 @@ _OPENAPI_TAGS = [
         "name": "Lead Discovery",
         "description": (
             "Submit a keyword and location to run the full 3-agent pipeline "
-            "(Research → Qualification → Sales). Returns a fully enriched, scored lead "
-            "with outreach copy — ready in a single call."
+            "(Research → Qualification → Sales). Use `max_leads` (1–10, default 5) to "
+            "find multiple companies in one call — results are ranked by `qualification_score` "
+            "so the highest-priority HRMS prospect is always first."
         ),
     },
     {
@@ -321,8 +322,8 @@ app = FastAPI(
         "AI-powered B2B lead discovery, qualification, and outreach generation "
         "for the **HumanMaximizer HRMS** product.\n\n"
         "## Quick start\n\n"
-        "1. **`POST /api/v1/search`** — submit a keyword + location; get a fully qualified lead "
-        "with outreach copy in one call.\n"
+        "1. **`POST /api/v1/search`** — submit a keyword + location + `max_leads` (1–10); "
+        "get multiple ranked leads with outreach copy in one call.\n"
         "2. **`GET /api/v1/leads`** — browse all leads sorted by qualification score.\n"
         "3. **`GET /api/v1/leads/{lead_id}`** — inspect score breakdown and reasoning for any lead.\n"
         "4. **`POST /api/v1/outreach/generate`** — regenerate outreach after refreshing the RAG index.\n"

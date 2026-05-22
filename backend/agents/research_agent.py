@@ -66,22 +66,67 @@ def _is_directory_url(url: str) -> bool:
 
 
 def _run_live(state: LeadState) -> dict:
-    """Search via SerpAPI, scrape the top result, extract company data."""
+    """Search, scrape the first usable result, extract company data."""
     serp = SerpSearchTool()
     results = serp.run(state["keyword"], state["location"])
     if not results:
-        raise RuntimeError("SerpAPI returned no results")
+        raise RuntimeError("Search returned no results")
 
-    for result in results[:8]:
+    candidates = _extract_candidates(results, max_companies=1, base_errors=list(state.get("errors", [])))
+    if not candidates:
+        raise RuntimeError("No usable result found from search results")
+    return candidates[0]
+
+
+def research_all_candidates(
+    keyword: str,
+    location: str,
+    max_companies: int = 5,
+) -> list[dict]:
+    """
+    Search for multiple companies and return enriched data for each.
+
+    Searches once, scrapes each non-directory result, deduplicates by domain,
+    and returns up to max_companies enriched dicts ready for qualification.
+    LLM summaries are NOT generated here — call generate_summary(data) per company.
+    """
+    serp = SerpSearchTool()
+    results = serp.run(keyword, location, num_results=max(max_companies * 2, 10))
+    if not results:
+        raise RuntimeError("Search returned no results")
+    candidates = _extract_candidates(results, max_companies=max_companies)
+    if not candidates:
+        raise RuntimeError("No usable companies found for this keyword and location")
+    return candidates
+
+
+def _extract_candidates(
+    results: list[dict],
+    max_companies: int,
+    base_errors: list | None = None,
+) -> list[dict]:
+    """Shared extraction loop used by both single-company and multi-company paths."""
+    candidates: list[dict] = []
+    seen_domains: set[str] = set()
+    errors = base_errors or []
+
+    for result in results:
+        if len(candidates) >= max_companies:
+            break
+
         url = result.get("link", "")
         if _is_directory_url(url):
             logger.debug("[ResearchAgent] skipping directory URL: %s", url)
             continue
+
+        domain = _extract_domain(url)
+        if not domain or domain in seen_domains:
+            continue
+
         snippet = result.get("snippet", "")
         title = result.get("title", "")
 
         scraped = _scraper.scrape(url)
-
         if isinstance(scraped, dict):
             scraped_text = scraped.get("text", "")
             meta_company_name = scraped.get("company_name")
@@ -93,24 +138,13 @@ def _run_live(state: LeadState) -> dict:
             continue
 
         text = scraped_text or snippet
+        seen_domains.add(domain)
 
-        domain = _extract_domain(url)
-
-        decision_makers = _contact_finder.find(
-            text,
-            domain=domain,
-        )
-
-        return {
-            "company_name": (
-                meta_company_name
-                or _clean_company_name(title, url)
-            ),
+        decision_makers = _contact_finder.find(text, domain=domain)
+        candidates.append({
+            "company_name": meta_company_name or _clean_company_name(title, url),
             "domain": domain,
-            "description": _extract_clean_description(
-                scraped_text,
-                snippet,
-            ),
+            "description": _extract_clean_description(scraped_text, snippet),
             "employee_count": _extract_employee_count(text),
             "industry": _guess_industry(text),
             "hq_location": _extract_location(text),
@@ -118,9 +152,19 @@ def _run_live(state: LeadState) -> dict:
             "decision_makers": decision_makers,
             "growth_signal": "unknown",
             "status": "pending",
-            "errors": list(state.get("errors", [])),
-        }
-    raise RuntimeError("No usable result found from SerpAPI results")
+            "errors": list(errors),
+        })
+        logger.info(
+            "[ResearchAgent] candidate[%d]: %s (%s)",
+            len(candidates), candidates[-1]["company_name"], domain,
+        )
+
+    return candidates
+
+
+def generate_summary(data: dict) -> str:
+    """Public wrapper — generate an LLM summary for a pre-extracted company dict."""
+    return _generate_summary(data)
 
 
 @retry(stop=stop_after_attempt(2), wait=wait_exponential(multiplier=1, min=1, max=5), reraise=False)

@@ -33,15 +33,16 @@ open http://localhost:8000/docs
 
 Open `http://localhost:8000/docs` and execute these 4 steps in order:
 
-### Step 1 — Run the pipeline
+### Step 1 — Run the pipeline (multiple companies, ranked)
 ```
 POST /api/v1/search
 {
-  "keyword": "manufacturing companies Pune",
-  "location": "Pune, India"
+  "keyword": "manufacturing companies",
+  "location": "Pune, India",
+  "max_leads": 5
 }
 ```
-Returns `lead_id`, `qualification_score`, and full `lead` object.
+Returns up to 5 companies ranked by `qualification_score` descending. The first entry is always the best HRMS prospect. Set `max_leads=1` for single-company mode.
 
 ### Step 2 — Inspect the full LeadState
 ```
