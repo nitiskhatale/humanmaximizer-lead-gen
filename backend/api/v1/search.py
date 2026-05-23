@@ -8,6 +8,7 @@ Multi-company mode (max_leads 2–10):
   Searches once, scrapes and extracts data for each result, runs Qualification and Sales
   on every candidate, then returns them ranked by qualification_score descending.
 """
+import asyncio
 import logging
 import time
 import uuid
@@ -134,7 +135,7 @@ async def run_search(
 async def _run_single(body: SearchRequest, session: AsyncSession, t0: float) -> dict:
     state = initial_state(keyword=body.keyword, location=body.location)
     try:
-        result = pipeline.invoke(state)
+        result = await asyncio.to_thread(pipeline.invoke, state)
     except Exception as exc:
         logger.error("Pipeline failed: %s", exc, exc_info=True)
         raise HTTPException(status_code=500, detail=f"Pipeline error: {exc}") from exc
@@ -164,7 +165,9 @@ async def _run_single(body: SearchRequest, session: AsyncSession, t0: float) -> 
 
 async def _run_multi(body: SearchRequest, session: AsyncSession, t0: float) -> dict:
     try:
-        candidates = research_all_candidates(body.keyword, body.location, body.max_leads)
+        candidates = await asyncio.to_thread(
+            research_all_candidates, body.keyword, body.location, body.max_leads
+        )
     except Exception as exc:
         logger.error("research_all_candidates failed: %s", exc, exc_info=True)
         raise HTTPException(status_code=500, detail=f"Search failed: {exc}") from exc
@@ -182,21 +185,21 @@ async def _run_multi(body: SearchRequest, session: AsyncSession, t0: float) -> d
 
         # LLM research summary
         try:
-            company_state["raw_summary"] = generate_summary(candidate)
+            company_state["raw_summary"] = await asyncio.to_thread(generate_summary, candidate)
         except Exception as exc:
             logger.warning(
                 "[search] LLM summary failed for %s: %s",
                 candidate.get("company_name"), exc,
             )
-            company_state["raw_summary"] = ""
+            company_state["raw_summary"] = candidate.get("description", "")
 
         # Deterministic qualification scoring + LLM reasoning
-        company_state = qualification_node(company_state)
+        company_state = await asyncio.to_thread(qualification_node, company_state)
 
         # Sales copy — only for qualified leads
         if company_state.get("is_qualified", False):
             try:
-                company_state = sales_node(company_state)
+                company_state = await asyncio.to_thread(sales_node, company_state)
             except Exception as exc:
                 logger.warning(
                     "[search] Sales agent failed for %s: %s",

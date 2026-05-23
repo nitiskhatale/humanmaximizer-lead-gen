@@ -26,7 +26,7 @@ _llm = OllamaLLM(
     model=settings.ollama_model,
     base_url=settings.ollama_base_url,
     temperature=0.3,
-    num_ctx=8192,
+    num_ctx=2048,
     repeat_penalty=1.1,
     num_gpu=settings.ollama_num_gpu,
 )
@@ -112,7 +112,7 @@ def _build_rag_query(state: LeadState) -> str:
     return " | ".join(parts)
 
 
-@retry(stop=stop_after_attempt(2), wait=wait_exponential(multiplier=1, min=1, max=5), reraise=False)
+@retry(stop=stop_after_attempt(1), wait=wait_exponential(multiplier=1, min=1, max=2), reraise=False)
 def _invoke_llm(prompt: str) -> str:
     llm_calls.labels(agent="sales").inc()
     return _llm.invoke(prompt).strip()

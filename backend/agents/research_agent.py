@@ -25,7 +25,7 @@ _llm = OllamaLLM(
     model=settings.ollama_model,
     base_url=settings.ollama_base_url,
     temperature=0.2,
-    num_ctx=8192,
+    num_ctx=2048,
     repeat_penalty=1.1,
     num_gpu=settings.ollama_num_gpu,
 )
@@ -167,7 +167,7 @@ def generate_summary(data: dict) -> str:
     return _generate_summary(data)
 
 
-@retry(stop=stop_after_attempt(2), wait=wait_exponential(multiplier=1, min=1, max=5), reraise=False)
+@retry(stop=stop_after_attempt(1), wait=wait_exponential(multiplier=1, min=1, max=2), reraise=False)
 def _invoke_llm(prompt: str) -> str:
     llm_calls.labels(agent="research").inc()
     return _llm.invoke(prompt).strip()
@@ -239,11 +239,24 @@ _SKIP_DOMAIN_PARTS = {"www", "app", "api", "blog", "explore", "help", "support",
 # Keywords whose presence anywhere in the URL indicates an aggregator/directory page,
 # not the actual company website. Used to skip results in live mode.
 _DIRECTORY_URL_KEYWORDS = {
-    "glassdoor", "naukri", "ambitionbox", "justdial", "indiamart",
+    # Job boards & HR aggregators
+    "glassdoor", "naukri", "ambitionbox", "indeed.com", "shine.com",
+    "monster.com", "foundit.in", "apna.co", "linkedin.com", "hirist.com",
+    # Business directories
+    "justdial", "indiamart", "sulekha", "maharashtradirectory",
+    "yellowpages", "tradeindia", "exportersindia", "alibabacloud",
+    # Research / data aggregators
     "builtin", "tracxn", "crunchbase", "zaubacorp", "tofler", "comparably",
-    "dnb.com", "mca.gov.in", "opencorporates", "bloomberg.com",
-    "reuters.com", "economictimes", "moneycontrol", "livemint",
-    "thehindu.com", "businessstandard", "yourstory.com", "inc42.com",
+    "dnb.com", "mca.gov.in", "opencorporates", "pitchbook", "owler",
+    # Document / content platforms
+    "scribd.com", "slideshare", "f6s.com", "academia.edu", "researchgate",
+    "issuu.com", "docplayer",
+    # News & media
+    "bloomberg.com", "reuters.com", "economictimes", "moneycontrol",
+    "livemint", "thehindu.com", "businessstandard", "yourstory.com",
+    "inc42.com", "entrackr.com", "techcrunch", "forbes.com",
+    # Generic aggregators
+    "wikipedia.org", "wikidata", "mapquest", "yelp.com",
 }
 
 _EMPLOYEE_PATTERNS = [

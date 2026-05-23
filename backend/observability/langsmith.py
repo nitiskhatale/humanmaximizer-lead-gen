@@ -15,11 +15,13 @@ logger = logging.getLogger(__name__)
 
 def configure_tracing() -> None:
     """Set LangSmith environment variables from Pydantic settings."""
-    if not settings.langchain_api_key:
+    api_key = (settings.langchain_api_key or "").strip()
+    if not api_key:
+        os.environ["LANGCHAIN_TRACING_V2"] = "false"
         logger.info("LANGCHAIN_API_KEY not set — LangSmith tracing disabled")
         return
 
-    os.environ["LANGCHAIN_API_KEY"] = settings.langchain_api_key
+    os.environ["LANGCHAIN_API_KEY"] = api_key
     os.environ["LANGCHAIN_PROJECT"] = settings.langchain_project
     os.environ["LANGCHAIN_TRACING_V2"] = "true"
     logger.info(

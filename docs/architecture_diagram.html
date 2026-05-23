@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>HumanMaximizer — Architecture Diagram</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    background: #0a0e1a;
+    color: #e8eaf6;
+    min-height: 100vh;
+    padding: 40px;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+
+  .badge {
+    display: inline-block;
+    border: 1.5px solid #00d4ff;
+    color: #00d4ff;
+    font-size: 9pt;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 16px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+
+  h1 {
+    font-size: 26pt;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+
+  h1 span { color: #00d4ff; }
+
+  .subtitle {
+    font-size: 11pt;
+    color: #8fa3c4;
+    margin-top: 6px;
+  }
+
+  .diagram-wrapper {
+    background: #141826;
+    border: 1px solid #1e2d4a;
+    border-radius: 16px;
+    padding: 40px;
+    margin: 0 auto;
+    max-width: 1100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .mermaid {
+    width: 100%;
+  }
+
+  .legend {
+    max-width: 1100px;
+    margin: 28px auto 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  .legend-card {
+    background: #141826;
+    border: 1px solid #1e2d4a;
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  .legend-title {
+    font-size: 10pt;
+    font-weight: 700;
+    color: #e8eaf6;
+    margin-bottom: 4px;
+  }
+
+  .legend-desc {
+    font-size: 9pt;
+    color: #8fa3c4;
+    line-height: 1.5;
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 28px;
+    font-size: 9pt;
+    color: #4a5568;
+  }
+
+  @media print {
+    body {
+      background: #ffffff;
+      color: #1a1a2e;
+      padding: 20px;
+    }
+    .diagram-wrapper {
+      background: #f8f9ff;
+      border-color: #dde3f5;
+    }
+    .legend-card {
+      background: #f8f9ff;
+      border-color: #dde3f5;
+    }
+    .legend-title { color: #1a1a2e; }
+    .footer { color: #9aa5b4; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="badge">Razor Infotech · AI Take-Home Assignment</div>
+  <h1>HumanMaximizer<br><span>System Architecture</span></h1>
+  <div class="subtitle">3-Agent LangGraph Pipeline · Mistral-7B · ChromaDB · FastAPI · Prometheus</div>
+</div>
+
+<div class="diagram-wrapper">
+  <div class="mermaid">
+flowchart TB
+    subgraph CLIENT["🖥️  CLIENT"]
+        UI["REST Client · Swagger UI · Streamlit"]
+    end
+
+    subgraph API["⚡  API GATEWAY — FastAPI + Uvicorn"]
+        direction LR
+        EP1["POST /api/v1/search"]
+        EP2["GET  /api/v1/leads"]
+        EP3["POST /api/v1/outreach/generate"]
+        EP4["GET  /api/v1/rag/query"]
+        EP5["GET /health · GET /metrics"]
+    end
+
+    subgraph PIPELINE["🤖  AGENT PIPELINE — LangGraph StateGraph · LeadState"]
+        direction LR
+        RA["🔬 ResearchAgent\n──────────────\nSerpAPI search\nWeb scrape\nDM extraction\nLLM summary"]
+        QA["⚖️ QualificationAgent\n──────────────\n5-dim scoring 0–100\nCompleteness gate\nConditional edge\nLLM reasoning"]
+        SA["✉️ SalesAgent\n──────────────\nRAG retrieval\nCold email gen\nLinkedIn gen\nSelf-critique"]
+
+        RA -->|"enriched LeadState"| QA
+        QA -- "score ≥ 35 ✅" --> SA
+        QA -- "score < 35 ❌" --> DQ(["Disqualified"])
+        SA --> Q(["Qualified + Outreach"])
+    end
+
+    subgraph RAG["🧠  RAG PIPELINE — humanmaximizer.com knowledge base"]
+        direction LR
+        INGEST["🌐 WebIngestor\nAsync crawler · depth=3\n512-char chunks · overlap=64"]
+        EMBED["🔢 nomic-embed-text\n768-dim vectors · Ollama"]
+        VDB[("🗄️ ChromaDB\nPersistentClient\nhnsw:cosine · 27 chunks")]
+        INGEST --> EMBED --> VDB
+    end
+
+    subgraph LLM["🧠  LLM INFERENCE — Ollama"]
+        MISTRAL["Mistral-7B-Instruct-v0.3 · Q4_K_M\n4-bit GGUF · ~4.4 GB VRAM · CPU/GPU"]
+    end
+
+    subgraph PERSIST["🗄️  PERSISTENCE"]
+        DB[("SQLite → PostgreSQL\nSQLAlchemy async · Alembic")]
+    end
+
+    subgraph OBS["📊  OBSERVABILITY"]
+        direction LR
+        PROM["Prometheus /metrics\nstage_latency · lead_score\nrag_chunks · hallucination_checks"]
+        LS["LangSmith\nper-request agent trace"]
+    end
+
+    UI --> API
+    EP1 --> PIPELINE
+    EP3 --> SA
+    EP4 --> VDB
+
+    RA --> LLM
+    QA --> LLM
+    SA --> VDB
+    SA --> LLM
+
+    PIPELINE --> PERSIST
+    PIPELINE --> OBS
+  </div>
+</div>
+
+<div class="legend">
+  <div class="legend-card">
+    <div class="legend-title"><span class="legend-dot" style="background:#00d4ff"></span>API Gateway</div>
+    <div class="legend-desc">FastAPI on port 8000. Validates requests, injects DB session, exposes Swagger docs at /docs</div>
+  </div>
+  <div class="legend-card">
+    <div class="legend-title"><span class="legend-dot" style="background:#a78bfa"></span>Agent Pipeline</div>
+    <div class="legend-desc">LangGraph StateGraph. Immutable LeadState passed node-to-node. Conditional edge routes on score ≥ 35</div>
+  </div>
+  <div class="legend-card">
+    <div class="legend-title"><span class="legend-dot" style="background:#00e676"></span>RAG Pipeline</div>
+    <div class="legend-desc">One-time crawl of humanmaximizer.com. 512-char chunks embedded with nomic-embed-text into ChromaDB</div>
+  </div>
+  <div class="legend-card">
+    <div class="legend-title"><span class="legend-dot" style="background:#ffd740"></span>LLM Inference</div>
+    <div class="legend-desc">Mistral-7B Q4_K_M via Ollama. Shared across all 3 agents. 4.4 GB VRAM. Apache 2.0 license</div>
+  </div>
+</div>
+
+<div class="footer">
+  HumanMaximizer AI Lead Generation Platform &nbsp;·&nbsp; Razor Infotech Take-Home Assignment &nbsp;·&nbsp; May 2026
+</div>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    themeVariables: {
+      background: '#141826',
+      primaryColor: '#1a2035',
+      primaryTextColor: '#e8eaf6',
+      primaryBorderColor: '#1e2d4a',
+      lineColor: '#00d4ff',
+      secondaryColor: '#0d1a2d',
+      tertiaryColor: '#1a2035',
+      edgeLabelBackground: '#141826',
+      clusterBkg: '#0d1220',
+      clusterBorder: '#1e2d4a',
+      titleColor: '#00d4ff',
+      nodeTextColor: '#e8eaf6',
+    },
+    flowchart: {
+      curve: 'basis',
+      padding: 20,
+      nodeSpacing: 50,
+      rankSpacing: 60,
+    }
+  });
+</script>
+
+</body>
+</html>

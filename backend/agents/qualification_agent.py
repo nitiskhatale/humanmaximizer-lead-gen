@@ -19,13 +19,13 @@ from prompts import load_prompt
 logger = logging.getLogger(__name__)
 
 _QUALIFICATION_THRESHOLD = 35   # min score to proceed to SalesAgent
-_COMPLETENESS_GATE = 0.4        # at least 2 of 5 key fields must be known
+_COMPLETENESS_GATE = 0.2        # at least 1 of 5 key fields must be known
 
 _llm = OllamaLLM(
     model=settings.ollama_model,
     base_url=settings.ollama_base_url,
     temperature=0.1,
-    num_ctx=4096,
+    num_ctx=2048,
     repeat_penalty=1.1,
     num_gpu=settings.ollama_num_gpu,
 )
@@ -132,7 +132,7 @@ def score_tech_stack(tech_stack: list[str]) -> int:
 
 def score_dm_reachability(decision_makers: list[dict]) -> int:
     if not decision_makers:
-        return 0  # penalty: no decision-maker data at all
+        return 4  # no contact found but company may still be reachable via website
     best = max(decision_makers, key=lambda d: d.get("confidence", 0))
     confidence = max(0.4, best.get("confidence", 0.4))  # floor at 0.4 (title-found baseline)
     has_email = bool(best.get("email"))
@@ -179,7 +179,7 @@ def _compute_data_completeness(state: LeadState) -> float:
 
 # ── LLM reasoning ──────────────────────────────────────────────────────────────
 
-@retry(stop=stop_after_attempt(2), wait=wait_exponential(multiplier=1, min=1, max=5), reraise=False)
+@retry(stop=stop_after_attempt(1), wait=wait_exponential(multiplier=1, min=1, max=2), reraise=False)
 def _invoke_llm(prompt: str) -> str:
     llm_calls.labels(agent="qualification").inc()
     return _llm.invoke(prompt).strip()
