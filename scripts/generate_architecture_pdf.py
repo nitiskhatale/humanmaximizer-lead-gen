@@ -354,3 +354,9 @@ if __name__ == "__main__":
     llm_pdf = PROJECT_ROOT / "docs" / "llm_strategy.pdf"
     if llm_md.exists():
         generate_pdf(llm_md, llm_pdf)
+
+    # Also generate prompt examples PDF
+    pe_md = PROJECT_ROOT / "docs" / "prompt_examples.md"
+    pe_pdf = PROJECT_ROOT / "docs" / "prompt_examples.pdf"
+    if pe_md.exists():
+        generate_pdf(pe_md, pe_pdf)

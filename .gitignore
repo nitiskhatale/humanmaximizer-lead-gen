@@ -51,3 +51,4 @@ backend/wheels/
 
 # Logs
 *.log
+*streamlit_log.txt

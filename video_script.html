@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HumanMaximizer AI Lead Gen — Live Video Script</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    background: #ffffff;
+    color: #1a1a2e;
+    font-size: 11pt;
+    line-height: 1.7;
+  }
+
+  /* ── Cover Page ── */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 40px;
+    background: linear-gradient(135deg, #0a0e1a 0%, #0d1a2d 100%);
+    page-break-after: always;
+  }
+  .cover-badge {
+    display: inline-block;
+    border: 1.5px solid #00d4ff;
+    color: #00d4ff;
+    font-size: 9pt;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 18px;
+    border-radius: 20px;
+    margin-bottom: 28px;
+  }
+  .cover-title {
+    font-size: 36pt;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+  .cover-title span { color: #00d4ff; }
+  .cover-subtitle {
+    font-size: 13pt;
+    color: #8fa3c4;
+    margin-bottom: 48px;
+    max-width: 520px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .cover-chip {
+    background: rgba(0,212,255,0.1);
+    border: 1px solid rgba(0,212,255,0.3);
+    color: #e8eaf6;
+    font-size: 10pt;
+    padding: 8px 20px;
+    border-radius: 8px;
+  }
+  .cover-chip strong { color: #00d4ff; }
+
+  /* ── Page layout ── */
+  .page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 52px 56px;
+  }
+
+  /* ── How-to-read box ── */
+  .legend {
+    background: #f0f7ff;
+    border: 1.5px solid #bee3f8;
+    border-left: 4px solid #00d4ff;
+    border-radius: 0 10px 10px 0;
+    padding: 18px 22px;
+    margin-bottom: 36px;
+  }
+  .legend h3 {
+    font-size: 10pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #0077b6;
+    margin-bottom: 10px;
+  }
+  .legend-row {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    margin-bottom: 5px;
+    font-size: 10.5pt;
+  }
+  .legend-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9pt;
+    font-weight: 600;
+    background: #dbeafe;
+    color: #1d4ed8;
+    padding: 1px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* ── Section divider ── */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 38px 0 24px 0;
+    page-break-before: auto;
+  }
+  .section-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 13pt;
+    flex-shrink: 0;
+    color: #fff;
+  }
+  .section-num.blue  { background: #0077b6; }
+  .section-num.teal  { background: #00897b; }
+  .section-num.indigo{ background: #5c35d4; }
+  .section-label {
+    font-size: 15pt;
+    font-weight: 800;
+    color: #1a1a2e;
+    flex: 1;
+  }
+  .section-time {
+    font-size: 9pt;
+    font-weight: 700;
+    color: #6c757d;
+    background: #f1f3f5;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .section-rule {
+    height: 3px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+  }
+  .rule-blue   { background: linear-gradient(90deg, #0077b6, #90e0ef); }
+  .rule-teal   { background: linear-gradient(90deg, #00897b, #b2dfdb); }
+  .rule-indigo { background: linear-gradient(90deg, #5c35d4, #c4b5fd); }
+
+  /* ── Block: subsection heading ── */
+  .sub-heading {
+    font-size: 11.5pt;
+    font-weight: 700;
+    color: #1a1a2e;
+    border-left: 3px solid #00d4ff;
+    padding-left: 10px;
+    margin: 22px 0 12px 0;
+  }
+
+  /* ── Block: screen instruction ── */
+  .screen-block {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    background: #f8f9ff;
+    border: 1px solid #dde3f5;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin: 10px 0;
+  }
+  .screen-icon {
+    font-size: 14pt;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .screen-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5pt;
+    color: #2d3a6b;
+    line-height: 1.55;
+  }
+
+  /* ── Block: speech ── */
+  .speech-block {
+    background: #fff;
+    border: 1px solid #e8ecf4;
+    border-left: 4px solid #0077b6;
+    border-radius: 0 10px 10px 0;
+    padding: 14px 18px;
+    margin: 10px 0;
+    color: #1a1a2e;
+    font-size: 11pt;
+    line-height: 1.75;
+  }
+  .speech-block.teal  { border-left-color: #00897b; }
+  .speech-block.indigo{ border-left-color: #5c35d4; }
+  .speech-block em    { color: #0077b6; font-style: normal; font-weight: 600; }
+
+  /* ── Checklist ── */
+  .checklist {
+    background: #f0fff4;
+    border: 1.5px solid #b7ebc8;
+    border-left: 4px solid #2ecc71;
+    border-radius: 0 10px 10px 0;
+    padding: 18px 22px;
+    margin-top: 36px;
+  }
+  .checklist h3 {
+    font-size: 10pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #1a7a40;
+    margin-bottom: 12px;
+  }
+  .checklist-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin-bottom: 8px;
+    font-size: 10.5pt;
+    color: #1a2e1a;
+  }
+  .check-box {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #2ecc71;
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+  .checklist code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9pt;
+    background: #d4f4e4;
+    padding: 1px 6px;
+    border-radius: 3px;
+    color: #145a32;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    margin-top: 48px;
+    padding-top: 18px;
+    border-top: 1px solid #e8ecf4;
+    text-align: center;
+    font-size: 9pt;
+    color: #9aa5b4;
+  }
+
+  /* ── Print styles ── */
+  @media print {
+    body { font-size: 10.5pt; }
+    .cover { min-height: auto; padding: 80px 60px; }
+    .cover-title { font-size: 30pt; }
+    .section-divider { page-break-inside: avoid; }
+    .screen-block, .speech-block { page-break-inside: avoid; }
+    .checklist { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════
+     COVER PAGE
+══════════════════════════════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-badge">Razor Infotech · AI Take-Home Assignment</div>
+  <div class="cover-title">
+    HumanMaximizer<br>
+    <span>AI Lead Generation Platform</span>
+  </div>
+  <div class="cover-subtitle">
+    Live Video Script — Architecture Walkthrough &amp; Demo
+  </div>
+  <div class="cover-meta">
+    <div class="cover-chip">Duration: <strong>~7 Minutes</strong></div>
+    <div class="cover-chip">Stack: <strong>LangGraph · Mistral-7B · ChromaDB</strong></div>
+    <div class="cover-chip">Date: <strong>May 2026</strong></div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     SCRIPT BODY
+══════════════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <!-- Legend -->
+  <div class="legend">
+    <h3>How to Read This Script</h3>
+    <div class="legend-row">
+      <span class="legend-tag">[SCREEN]</span>
+      <span>What to show on screen at that exact moment</span>
+    </div>
+    <div class="legend-row">
+      <span class="legend-tag">[SAY]</span>
+      <span>Words to speak — say these exactly or close to it</span>
+    </div>
+    <div class="legend-row">
+      <span class="legend-tag">TIME</span>
+      <span>Approximate timestamp for pacing reference</span>
+    </div>
+  </div>
+
+
+  <!-- ── PART 1 HEADER ── -->
+  <div style="text-align:center; margin: 32px 0 28px 0;">
+    <div style="font-size:9pt; font-weight:700; text-transform:uppercase; letter-spacing:2px; color:#6c757d; margin-bottom:6px;">Part 1 of 2</div>
+    <div style="font-size:20pt; font-weight:800; color:#1a1a2e;">Architecture &amp; Concepts</div>
+    <div style="font-size:10pt; color:#6c757d; margin-top:4px;">0:00 – 4:00</div>
+  </div>
+
+
+  <!-- ── SECTION: OPENING ── -->
+  <div class="section-divider">
+    <div class="section-num blue">1</div>
+    <div class="section-label">Opening</div>
+    <div class="section-time">0:00 – 0:40</div>
+  </div>
+  <div class="section-rule rule-blue"></div>
+
+  <div class="screen-block">
+    <div class="screen-icon">🖥️</div>
+    <div class="screen-text">Streamlit app — Home page — full screen in browser</div>
+  </div>
+
+  <div class="speech-block">
+    "Hi. Today I'm presenting HumanMaximizer — an AI lead generation platform I built as a take-home assignment for Razor Infotech.<br><br>
+    HumanMaximizer sells HRMS software — payroll, attendance, compliance — to Indian enterprises. Their sales team was doing this manually: Googling companies, copying data into spreadsheets, writing cold emails by hand. Very slow, doesn't scale.<br><br>
+    So I built an AI pipeline that does the entire job automatically. You give it one keyword and one city. It finds companies, researches them, scores them, and writes personalised outreach — all in one API call.<br><br>
+    Let me show you the architecture first, then we'll run it live."
+  </div>
+
+
+  <!-- ── SECTION: BIG PICTURE ── -->
+  <div class="section-divider">
+    <div class="section-num blue">2</div>
+    <div class="section-label">The System — Three Layers</div>
+    <div class="section-time">0:40 – 1:10</div>
+  </div>
+  <div class="section-rule rule-blue"></div>
+
+  <div class="screen-block">
+    <div class="screen-icon">🖥️</div>
+    <div class="screen-text">Open docs/architecture.md — show the mermaid flowchart diagram</div>
+  </div>
+
+  <div class="speech-block">
+    "Here's the full system. Three layers.<br><br>
+    Layer one — the <em>Client</em>. Either a REST client, Swagger UI, or the Streamlit dashboard you just saw.<br><br>
+    Layer two — a <em>FastAPI backend</em> on port 8000. It receives the request, validates it, and triggers the pipeline.<br><br>
+    Layer three — the core. A <em>three-agent AI pipeline</em> built with LangGraph. Three agents run one after another: Research Agent, Qualification Agent, Sales Agent. They all run locally — no cloud, no external AI API. Mistral-7B runs on this machine via Ollama."
+  </div>
+
+
+  <!-- ── SECTION: LANGGRAPH ── -->
+  <div class="section-divider">
+    <div class="section-num blue">3</div>
+    <div class="section-label">Why LangGraph — The State Machine</div>
+    <div class="section-time">1:10 – 1:45</div>
+  </div>
+  <div class="section-rule rule-blue"></div>
+
+  <div class="screen-block">
+    <div class="screen-icon">🖥️</div>
+    <div class="screen-text">Open backend/agents/graph.py — highlight the build_graph() function and _route_after_qualification()</div>
+  </div>
+
+  <div class="speech-block">
+    "I used LangGraph to wire the three agents together. Let me show you why this matters.<br><br>
+    Look at this <em>build_graph</em> function. Three nodes, three edges. The critical line is this conditional edge after Agent 2.<br><br>
+    If the lead is qualified, it goes to the Sales Agent. If it is not qualified, it goes straight to END — no outreach is generated, no LLM tokens are wasted.<br><br>
+    That routing decision is a <em>Python if-statement</em> — not an LLM call. That is the whole point of LangGraph. Your pipeline logic is code, not prompts. Deterministic, fast, auditable."
+  </div>
+
+
+  <!-- ── SECTION: RESEARCH AGENT ── -->
+  <div class="section-divider">
+    <div class="section-num blue">4</div>
+    <div class="section-label">Agent 1 — Research Agent</div>
+    <div class="section-time">1:45 – 2:30</div>
+  </div>
+  <div class="section-rule rule-blue"></div>
+
+  <div class="screen-block">
+    <div class="screen-icon">🖥️</div>
+    <div class="screen-text">Open backend/agents/research_agent.py — scroll to _run_live() and _DIRECTORY_URL_KEYWORDS</div>
+  </div>
+
+  <div class="speech-block">
+    "Agent 1 is the Research Agent. Here is what it does step by step.<br><br>
+    First, it calls <em>SerpAPI</em> with your keyword and location — gives us Google search results programmatically.<br><br>
+    Second, it filters out directory sites. You can see this list — Glassdoor, Naukri, IndiaMart, Crunchbase. We skip these. We want the company's actual website, not an aggregator.<br><br>
+    Third, it <em>scrapes</em> the company's website using BeautifulSoup and extracts: employee count using regex, HQ location, industry, and HR decision-maker contacts — names, titles, emails, LinkedIn URLs.<br><br>
+    Finally, it calls <em>Mistral-7B</em> to generate a three-paragraph company intelligence report. Company overview, HR pain points, and HRMS fit signal."
+  </div>
+
+
+  <!-- ── SECTION: QUALIFICATION AGENT ── -->
+  <div class="section-divider">
+    <div class="section-num blue">5</div>
+    <div class="section-label">Agent 2 — Qualification Agent</div>
+    <div class="section-time">2:30 – 3:15</div>
+  </div>
+  <div class="section-rule rule-blue"></div>
+
+  <div class="screen-block">
+    <div class="screen-icon">🖥️</div>
+    <div class="screen-text">Open backend/agents/qualification_agent.py — show the 5 scoring functions: score_company_size, score_industry, score_tech_stack, score_dm_reachability, score_growth_signal</div>
+  </div>
+
+  <div class="speech-block">
+    "Agent 2 is the Qualification Agent. Here I made a key design decision — I score leads with <em>deterministic Python functions</em>, not an LLM.<br><br>
+    Five dimensions, each worth 0 to 20 points.<br><br>
+    <em>Company size</em> — under 50 employees scores 2, over 2000 scores 20. That is the enterprise buyer profile.<br><br>
+    <em>Industry</em> — manufacturing, healthcare, BFSI are primary targets, 20 points. Unknown industry gets 6.<br><br>
+    <em>Tech stack gap</em> — this is the most important one. On Excel or spreadsheets? 18 points — strongest buying signal. Already on Darwinbox or Keka? Only 4 points — hard to displace an incumbent.<br><br>
+    <em>Decision maker reachability</em> — email plus LinkedIn is 20. No contact found is 0.<br><br>
+    <em>Growth signal</em> — hiring surge or recent funding is 20. Contracting is 2.<br><br>
+    Total out of 100. If the score is below 35, or if less than 40% of the data fields have real values, the lead is disqualified and the Sales Agent never runs. This saves LLM tokens on bad leads.<br><br>
+    After scoring, Mistral-7B writes exactly two sentences: the best positive signal and the biggest risk."
+  </div>
+
+
+  <!-- ── SECTION: RAG + SALES AGENT ── -->
+  <div class="section-divider">
+    <div class="section-num blue">6</div>
+    <div class="section-label">Agent 3 — Sales Agent &amp; RAG</div>
+    <div class="section-time">3:15 – 4:00</div>
+  </div>
+  <div class="section-rule rule-blue"></div>
+
+  <div class="screen-block">
+    <div class="screen-icon">🖥️</div>
+    <div class="screen-text">Go back to docs/architecture.md — scroll to the RAG Pipeline section of the diagram</div>
+  </div>
+
+  <div class="speech-block">
+    "Agent 3 is the Sales Agent. It only runs for qualified leads.<br><br>
+    It uses <em>RAG — Retrieval Augmented Generation</em>. Here is the idea: if you ask Mistral-7B to write a cold email about HumanMaximizer's features, it will make things up. It does not know what HumanMaximizer actually sells.<br><br>
+    So I pre-crawled humanmaximizer.com, split all the product content into small chunks, embedded each chunk into a vector using <em>nomic-embed-text</em>, and stored them in <em>ChromaDB</em> — a local vector database.<br><br>
+    When the Sales Agent writes an email for a hospital chain, it queries ChromaDB for the most relevant product knowledge — attendance, compliance, payroll features — retrieves the top 5 matching chunks, and tells Mistral-7B: write the email using only these facts.<br><br>
+    Every claim in the email is grounded in real product content. No hallucination. And the retrieved chunks are saved in the lead record so you can verify every sentence."
+  </div>
+
+
+  <!-- ── PART 2 HEADER ── -->
+  <div style="text-align:center; margin: 48px 0 28px 0; page-break-before: always;">
+    <div style="font-size:9pt; font-weight:700; text-transform:uppercase; letter-spacing:2px; color:#6c757d; margin-bottom:6px;">Part 2 of 2</div>
+    <div style="font-size:20pt; font-weight:800; color:#1a1a2e;">Live Demo</div>
+    <div style="font-size:10pt; color:#6c757d; margin-top:4px;">4:00 – 6:30</div>
+  </div>
+
+
+  <!-- ── SECTION: SETUP ── -->
+  <div class="section-divider">
+    <div class="section-num teal">7</div>
+    <div class="section-label">Setup — Servers Already Running</div>
+    <div class="section-time">4:00 – 4:20</div>
+  </div>
+  <div class="section-rule rule-teal"></div>
+
+  <div class="screen-block">
+    <div class="screen-icon">🖥️</div>
+    <div class="screen-text">Show two terminal windows side by side — one with Ollama running, one with Uvicorn running</div>
+  </div>
+
+  <div class="speech-block teal">
+    "Everything is already running. Ollama is serving Mistral-7B on port 11434. The FastAPI backend is running on port 8000. Now let me open the Streamlit UI."
+  </div>
+
+  <div class="screen-block">
+    <div class="screen-icon">🖥️</div>
+    <div class="screen-text">Switch to browser — Streamlit Home page at localhost:8501</div>
+  </div>
+
+  <div class="speech-block teal">
+    "This is the home page. You can see the live system stats — API is Online, Mistral-7B is connected, and we have some leads from previous runs already in the database."
+  </div>
+
+
+  <!-- ── SECTION: KNOWLEDGE BASE ── -->
+  <div class="section-divider">
+    <div class="section-num teal">8</div>
+    <div class="section-label">Knowledge Base — RAG Data</div>
+    <div class="section-time">4:20 – 4:40</div>
+  </div>
+  <div class="section-rule rule-teal"></div>
+
+  <div class="screen-block">
+    <div class="screen-icon">🖥️</div>
+    <div class="screen-text">Click sidebar → Knowledge Base page</div>
+  </div>
+
+  <div class="speech-block teal">
+    "Quick look at the Knowledge Base page. This is where the RAG data lives. I already ingested humanmaximizer.com — 27 chunks are indexed in ChromaDB.<br><br>
+    Watch this — I will type 'attendance management' and query ChromaDB directly."
+  </div>
+
+  <div class="screen-block">
+    <div class="screen-icon">🖥️</div>
+    <div class="screen-text">Type "attendance management" in the query box → click Search ChromaDB → chunks appear</div>
+  </div>
+
+  <div class="speech-block teal">
+    "These are the actual product knowledge chunks that would ground a cold email for any company with an attendance problem. This is what gets injected into the Mistral-7B prompt."
+  </div>
+
+
+  <!-- ── SECTION: LAUNCH PIPELINE ── -->
+  <div class="section-divider">
+    <div class="section-num teal">9</div>
+    <div class="section-label">Launch the Pipeline</div>
+    <div class="section-time">4:40 – 5:10</div>
+  </div>
+  <div class="section-rule rule-teal"></div>
+
+  <div class="screen-block">
+    <div class="screen-icon">🖥️</div>
+    <div class="screen-text">Click sidebar → Find Leads page</div>
+  </div>
+
+  <div class="speech-block teal">
+    "Now the main demo. Find Leads page."
+  </div>
+
+  <div class="screen-block">
+    <div class="screen-icon">🖥️</div>
+    <div class="screen-text">Click the "Healthcare · Mumbai" preset button — fields auto-fill</div>
+  </div>
+
+  <div class="speech-block teal">
+    "I will use this Healthcare Mumbai preset — hospital chains and diagnostics companies in Mumbai. Max leads set to 3. Launching the pipeline now."
+  </div>
+
+  <div class="screen-block">
+    <div class="screen-icon">🖥️</div>
+    <div class="screen-text">Click the blue "Launch AI Agent Pipeline" button</div>
+  </div>
+
+
+  <!-- ── SECTION: WATCH PIPELINE ── -->
+  <div class="section-divider">
+    <div class="section-num teal">10</div>
+    <div class="section-label">Watch the Pipeline Execute</div>
+    <div class="section-time">5:10 – 5:50</div>
+  </div>
+  <div class="section-rule rule-teal"></div>
+
+  <div class="screen-block">
+    <div class="screen-icon">🖥️</div>
+    <div class="screen-text">Stay on the chain-of-thought trace — let it animate while narrating</div>
+  </div>
+
+  <div class="speech-block teal">
+    "Watch the agent execution trace. This shows exactly what is happening inside the pipeline.<br><br>
+    <em>Agent 1 — Research Agent.</em> SerpAPI is firing a Google search. It is parsing results, filtering out directories, scraping company websites, running ContactFinder to extract HR decision-maker names and titles, then Mistral-7B is generating the company intelligence summaries.<br><br>
+    <em>Agent 2 — Qualification Agent.</em> Five scoring functions running. Data completeness gate applying. Mistral-7B writing the reasoning.<br><br>
+    <em>Agent 3 — Sales Agent.</em> Building a RAG query, retrieving product chunks from ChromaDB, Mistral-7B writing the cold email and LinkedIn message.<br><br>
+    The actual API response is running in the background. We are waiting for the LLM to finish."
+  </div>
+
+  <div class="screen-block">
+    <div class="screen-icon">🖥️</div>
+    <div class="screen-text">Results appear on screen — lead cards are now visible</div>
+  </div>
+
+  <div class="speech-block teal">
+    "Done. Results are in. Let me open the top-ranked lead."
+  </div>
+
+  <div class="screen-block">
+    <div class="screen-icon">🖥️</div>
+    <div class="screen-text">Click the expander on Lead #1</div>
+  </div>
+
+
+  <!-- ── SECTION: EXPLORE RESULTS ── -->
+  <div class="section-divider">
+    <div class="section-num teal">11</div>
+    <div class="section-label">Explore the Results</div>
+    <div class="section-time">5:50 – 6:30</div>
+  </div>
+  <div class="section-rule rule-teal"></div>
+
+  <div class="sub-heading">Tab 1 — Score Breakdown</div>
+
+  <div class="screen-block">
+    <div class="screen-icon">🖥️</div>
+    <div class="screen-text">Click "Score Breakdown" tab — radar chart is visible</div>
+  </div>
+
+  <div class="speech-block teal">
+    "Score Breakdown. The radar chart shows all five dimensions. Industry relevance is maxed — Healthcare is a primary target. Tech stack gap is high — they are on spreadsheets. Below the chart is the Mistral-7B qualification reasoning — two sentences, best signal and biggest risk."
+  </div>
+
+  <div class="sub-heading">Tab 2 — Outreach Drafts</div>
+
+  <div class="screen-block">
+    <div class="screen-icon">🖥️</div>
+    <div class="screen-text">Click "Outreach Drafts" tab — cold email is visible</div>
+  </div>
+
+  <div class="speech-block teal">
+    "Outreach Drafts. Here is the personalised cold email — subject line, full body, references actual HumanMaximizer product features relevant to a hospital chain.<br><br>
+    Now expand this RAG Grounding Context section."
+  </div>
+
+  <div class="screen-block">
+    <div class="screen-icon">🖥️</div>
+    <div class="screen-text">Click the "RAG Grounding Context" expander — chunks appear below the email</div>
+  </div>
+
+  <div class="speech-block teal">
+    "These are the exact product knowledge chunks retrieved from ChromaDB that grounded this email. Every factual claim in that email comes from here. No hallucination."
+  </div>
+
+  <div class="sub-heading">Tab 3 — Company Intelligence</div>
+
+  <div class="screen-block">
+    <div class="screen-icon">🖥️</div>
+    <div class="screen-text">Click "Company Intelligence" tab</div>
+  </div>
+
+  <div class="speech-block teal">
+    "Company Intelligence tab — the three-paragraph Mistral-7B report. Company overview, HR pain points, and the HRMS fit signal explaining why this company is a good prospect."
+  </div>
+
+
+  <!-- ── SECTION: CLOSE ── -->
+  <div class="section-divider">
+    <div class="section-num indigo">12</div>
+    <div class="section-label">Closing</div>
+    <div class="section-time">6:30 – 7:00</div>
+  </div>
+  <div class="section-rule rule-indigo"></div>
+
+  <div class="screen-block">
+    <div class="screen-icon">🖥️</div>
+    <div class="screen-text">Navigate back to Streamlit Home page</div>
+  </div>
+
+  <div class="speech-block indigo">
+    "That is the full system. One keyword, one location, one button — you get researched companies, a deterministic qualification score, and personalised outreach grounded in real product knowledge.<br><br>
+    The key decisions: <em>LangGraph</em> for explicit deterministic routing. <em>Rule-based scoring</em> for reproducibility. <em>RAG</em> to prevent hallucination. <em>Mistral-7B at Q4_K_M</em> quantization — runs on a single 8 GB GPU locally. And one environment variable swaps SQLite to PostgreSQL for production.<br><br>
+    Thanks for watching."
+  </div>
+
+
+  <!-- ── CHECKLIST ── -->
+  <div class="checklist">
+    <h3>Before You Record — Checklist</h3>
+    <div class="checklist-item">
+      <div class="check-box"></div>
+      <span>Ollama is running: <code>ollama serve</code></span>
+    </div>
+    <div class="checklist-item">
+      <div class="check-box"></div>
+      <span>FastAPI backend is running: <code>uvicorn backend.main:app --reload --port 8000</code></span>
+    </div>
+    <div class="checklist-item">
+      <div class="check-box"></div>
+      <span>Streamlit is running: <code>streamlit run streamlit_app.py</code></span>
+    </div>
+    <div class="checklist-item">
+      <div class="check-box"></div>
+      <span>ChromaDB already has 27 chunks ingested — Home page shows Knowledge Base ready</span>
+    </div>
+    <div class="checklist-item">
+      <div class="check-box"></div>
+      <span>At least 3–4 leads already in the DB so Home stats are populated</span>
+    </div>
+    <div class="checklist-item">
+      <div class="check-box"></div>
+      <span>Use the <code>Healthcare · Mumbai</code> preset — cleanest live demo result</span>
+    </div>
+    <div class="checklist-item">
+      <div class="check-box"></div>
+      <span>If Ollama is slow, say: <em>"This is running on CPU — on a GPU this is under 10 seconds"</em></span>
+    </div>
+    <div class="checklist-item">
+      <div class="check-box"></div>
+      <span>Trim dead-air LLM wait time in post-editing</span>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    HumanMaximizer AI Lead Generation Platform &nbsp;·&nbsp; Razor Infotech Take-Home Assignment &nbsp;·&nbsp; May 2026
+  </div>
+
+</div>
+</body>
+</html>
