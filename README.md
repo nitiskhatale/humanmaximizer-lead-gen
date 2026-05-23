@@ -14,9 +14,19 @@ An autonomous AI platform that discovers, qualifies, and drafts personalised out
 
 ---
 
+## Demo
+
+| | Link |
+|---|---|
+| **Architecture Walkthrough** | [Watch on Loom](https://www.loom.com/share/e1174aaa6f19458dbe18322e1020506e) |
+| **Live Demo** | [Watch on Loom](https://www.loom.com/share/6095566035ef43788ea62e3c5072a753) |
+
+---
+
 ## Table of Contents
 
-1. [Business Use Case](#1-business-use-case)
+1. [Demo](#demo)
+2. [Business Use Case](#1-business-use-case)
 2. [Multi-Agent Architecture](#2-multi-agent-architecture)
 3. [RAG Pipeline](#3-rag-pipeline)
 4. [Open Source LLM Strategy](#4-open-source-llm-strategy)
